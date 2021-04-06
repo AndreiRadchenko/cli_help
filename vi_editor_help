@@ -1,0 +1,7 @@
+#open file
+vi lock.py
+
+#opened in command mode (move cursor, copy/paste, save command issue)
+#to enter in insert mode (tape a text) press 'i'
+#to exit to command mode hit 'escape'
+#to save tape ':wq' (write quit) in command mode
