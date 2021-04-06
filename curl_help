@@ -1,0 +1,3 @@
+#copy raw file from github (need raw file url)
+curl --user andreiradchenko 'https://raw.githubusercontent.com/zigpy/zha-device-handlers/dm/wyze-lock/zhaquirks/wyze/lock.py' >lock.py
+
