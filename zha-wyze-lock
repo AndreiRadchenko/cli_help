@@ -5,3 +5,14 @@ https://community.home-assistant.io/t/wyze-lock-zigbee-home-assistant-hassio-has
 /usr/local/lib/python3.8/site-packages/zhaquirks/wyze
 
 #edit lock.py file after every hassio update and wyze lock calibration
+
+Access the quirks directory
+
+on HA > 0.113: /usr/local/lib/python3.8/site-packages/zhaquirks/
+Copy updated/new quirk to zhaquirks directory: cp -a /config/temp/NEW_QUIRK ./
+
+Remove the pycache folder so it is regenerated rm -rf ./__pycache__/
+
+Close out the console and restart HA.
+
+Note: The added/update quirk will not survive a HA version update.
