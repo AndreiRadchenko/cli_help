@@ -33,10 +33,10 @@ RUN cd ~ && \
     cd  dlib/ && \
     python3 setup.py install --yes USE_AVX_INSTRUCTIONS
 
-
+#==========================================================================================================================================================================
 # Install Flask
 RUN cd ~ && \
-    pip3 install flask flask-cors
+    pip3 install flask
 
 
 # Install Face-Recognition Python Library
@@ -44,14 +44,19 @@ RUN cd ~ && \
     mkdir -p face_recognition && \
     git clone https://github.com/ageitgey/face_recognition.git face_recognition/ && \
     cd face_recognition/ && \
+    # delete scipy and flask from requirement.txt
     pip3 install -r requirements.txt && \
+    # python3 setup.py install
+
+# Install scipy
+RUN cd ~ && \
+    wget -O the-scipy-file.whl https://www.piwheels.org/simple/scipy/scipy-1.6.3-cp37-cp37m-linux_armv7l.whl#sha256=208fe23655561a95ede6bb3bb15342882f6a8f3867bf5564cafbdbcc401b1a5d && \
+    pip3 install the-scipy-file.whl
+    # pip3 install -r requirements.txt && \
+    cd face_recognition/ && \
     python3 setup.py install
-
-
-# Copy web service script
-COPY facerec_service.py /root/facerec_service.py
-
-
+    
+#===========================================================================================================================================================================
 # Start the web service
 CMD cd /root/ && \
     python3 facerec_service.py
