@@ -60,3 +60,4 @@ RUN cd ~ && \
 # Start the web service
 CMD cd /root/ && \
     python3 facerec_service.py
+# https://github.com/JanLoebel/face_recognition/blob/master/facerec_service.py
