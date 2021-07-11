@@ -17,7 +17,7 @@ Close out the console and restart HA.
 
 Note: The added/update quirk will not survive a HA version update.
 
-cd /usr/local/lib/python3.8/site-packages/zhaquirks
+cd /usr/local/lib/python3.9/site-packages/zhaquirks
 cp -a /config/wyze/ ./
 rm -rf ./__pycache__/
 restart HA
