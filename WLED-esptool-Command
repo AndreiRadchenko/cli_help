@@ -1,0 +1,14 @@
+ESP32
+(you will need to have a bootloader installed)
+
+esptool.py write_flash 0x10000 ./WLED_XXX.bin 
+
+If the ESP32 is new, you will need to flash the bootloader first. This bootloader should be addressed to 0x00000 and the firmware to 0x10000. This is not required if you had an Arduino sketch running on it before. You can find the bootloader file in the assets for the 0.9.1 release.
+
+esptool.py write_flash 0x0 ./esp32_bootloader.bin
+
+When esptool.py says Connecting..., some ESP32 boards require you to hold the boot button (to the right of the USB port) for a few seconds
+
+If you experience issues, run this command before trying write_flash again (Note: this will erase all settings stored on the ESP!)
+
+esptool.py erase_flash

@@ -1,0 +1,47 @@
+#setup nginx as reverce proxy server (secure connection with ssl/tsl cert)
+
+#install nginx:
+    $~: sudo apt-get update && sudo apt-get install nginx
+
+#obtain root on android for accessing port below 1024 (80 for http and 443 for https)
+#install tsu on termux:
+    pkg install tsu
+
+#optional install termux-sudo, A bash script that provides sudo for Termux:
+    Installing sudo
+
+    Clone termux-sudo or download to phone and extract
+    Open Termux
+    Install a dependency needed for sudo:
+    pkg install ncurses-utils
+
+    Change to cloned or extraction directory
+    Execute the following commands to place sudo into the correct directory with the proper permissions and ownership
+
+    cat sudo > /data/data/com.termux/files/usr/bin/sudo
+    chmod 700 /data/data/com.termux/files/usr/bin/sudo
+
+#Identify the NGINX User:
+    $ps -ef | grep nginx    for me its u0_a97
+#set user in nginx.conf
+    user  u0_a97; (the same user shoold be in cert.pem)
+
+#to run nginx as su:
+    $tsu - Drop to root shell
+    #nginx
+
+#or you can use
+    $sudo nginx
+
+#stop server
+    $nginx -s stop (reload)
+
+Using openssl
+If you do not own your own domain, you may generate a self-signed certificate. This will not work with IFTTT, but it will encrypt all of your Home Assistant traffic.
+
+$ openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 9999
+$ openssl rsa -in key.pem -out key.pem
+$ sudo cp key.pem cert.pem /etc/nginx/ssl
+$ sudo chmod 600 /etc/nginx/ssl/key.pem /etc/nginx/ssl/cert.pem
+$ sudo chown root:root /etc/nginx/ssl/key.pem /etc/nginx/ssl/cert.pem
+

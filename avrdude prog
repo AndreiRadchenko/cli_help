@@ -1,0 +1,30 @@
+set read/write access: sudo chmod ugo+rw /dev/ttyACM0
+
+gives the current baud rate for the ttyACM0 device: stty -F /dev/ttyACM0 
+
+Set tty device settings: stty -F /dev/ttyACM0 9600 -parity cs8 -cstopb
+
+send command to serial port: echo -e "AT-RX" > /dev/ttyACM0
+
+Send data: cat firmware.cod > /dev/ttyACM0
+
+Reading serial port (need to be root): cat /dev/ttyACM0
+
+
+avrdude -p m328p -P /dev/ttyACM0 -c avrisp -b 19200 -F -U flash:w:/home/andrei/Arduino/Nano/optiboot_atmega328.hex
+
+avrdude -p m328p -P /dev/ttyUSB0 -c arduino -b 19200 -F
+
+avrdude -p m328p -P /dev/ttyACM0 -c avrisp -b 19200 -F -U lfuse:w:0xFF:m -U hfuse:w:0xDE:m -U efuse:w:0xFD:m
+
+avrdude -c avrisp -p m328pb -P /dev/ttyACM1 -b 19200 -e -u -U lock:w:0x3f:m -U efuse:w:0xF5:m -U hfuse:w:0xDE:m -U lfuse:w:0xFF:m
+
+avrdude -c avrisp -p m328pb -P /dev/ttyACM1 -b 19200 -U flash:w:/home/andrei/Arduino/Blink/Blink_boot.hex -U lock:w:0x0f:m
+
+avrdude -c avrisp -p m328p -P /dev/ttyACM0 -b 19200 -U flash:w:/home/andrei/Brain-arduino/Nano-side/HC-12-start-nano/HC_12_3.hex
+
+//program mega2560 thrue usbasp programmer
+avrdude -p m2560 -c stk500v2 -P /dev/ttyACM1 -b 115200 -U flash:w:/home/andrei/WebMicGain/I2CSlave/I2CSlave.hex
+
+add this to arduino ide prefferences:
+http://arduino.esp8266.com/stable/package_esp8266com_index.json, 

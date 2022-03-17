@@ -1,0 +1,36 @@
+Install pip: 
+$ python3 --version
+$ sudo apt update
+$ sudo apt install python3-pip
+$ pip3 --version
+
+Using PIP:
+$ pip3 --help
+$ pip3 search <keyword>
+$ pip3 search vlc
+
+$ pip3 install <package_name>
+
+
+On Debian-derived Linux distributions (like Ubuntu and Mint), install PyAudio using APT: execute sudo apt-get install python-pyaudio python3-pyaudio in a terminal.
+
+$ sudo apt-get install python3-pyaudio
+or
+$ sudo apt-get install portaudio19-dev
+$ pip install ledfx
+
+Launch LedFx with the open-ui option to launch the browser:
+$ ledfx --open-ui
+
+To check what directories are in your $PATH, you can use either the printenv or echo command:
+$ echo $PATH
+
+In this example, we’ll set the variable in the ~/.bashrc file. Open the file with your text editor 
+
+$ nano ~/.bashrc
+
+and add the following line at the end of it:
+export PATH="$HOME/.local/bin:$PATH"
+
+Save the file and load the new $PATH into the current shell session using the source command:
+$ source ~/.bashrc

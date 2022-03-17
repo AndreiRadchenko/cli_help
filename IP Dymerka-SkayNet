@@ -1,0 +1,90 @@
+IP Dymerka: 176.126.62.89
+#router web config:
+176.126.62.77:8070 login: admin pass: anyhow06
+176.126.62.89
+
+SSID: ASUS_2G/5G (admin anyhow06)
+Pass: MishaDimaVika
+
+SSID: SkayNet (admin admin)
+Pass: 05092018
+- 192.168.0.99 - 841N on old 841N tplink for DMZ
+
+SSID: Archer (admin anyhow06)
+Pass: vikavika
+
+SSID: Archer5G
+Pass: vikavika
+- 192.168.0.98
+
+Termux Home Assistant open ports
+- 192.168.0.204:8082 - cam onvif (open)
+- 192.168.0.204:554  - cam rtsp (rtsp://home:Grushevskogo8a@176.126.62.89:554/11)
+- 192.168.0.222:1880 - node-red (admin/Grushevskogo8a) (E0-2C-B2-3F-4B-DE)
+- 192.168.0.222:1883 - mosquitto (home/Grushevskogo8a)
+- 192.168.0.222:8123 - homeassistant (home/Grushevskogo8a)
+- 192.168.0.222:8022 - ssh (pass: andrei)
+- 192.168.0.222:443  - nginx reverse proxi for ssl/tls encripting hass
+- 192.168.0.222:80 - nginx reverse proxi for ssl/tls encripting hass
+- 192.168.0.222:8070 - port for tplink 841N web gui
+- 192.168.0.222:8080 - port for hassio speedtest
+
+- 192.168.0.2:8123 - hassio eth (Andrii/Grushevskogo8a)
+- 192.168.0.3:8123 - hassio wifi (Andrii/Grushevskogo8a) 176.126.62.77:38123
+- 192.168.0.99 - 841N on old 841N tplink for DMZ
+
+tasmota initial ip: 192.168.4.1
+
+devices static-ip
+- 192.168.0.201 (mac: 24:0a:c4:9b:f5:34) - 	wled-stairs (mDNS http://wled-stairs.local). Afte flashing AP- WLED-AP pass - wled1234
+- 192.168.0.4 - (mac: 50:8F:4C:63:57:92) -  RedmiNote4-Redmi
+
+SkayNet devices
+- CC-50-E3-4B-CA-51 /              -   boiler-tasmota-2641
+- DC-4F-22-DF-92-CC / 192.168.1.12 -   outdoor_gate_light-4812
+- DC-4F-22-DF-9A-E0 / 192.168.1.13 -   toilet_light
+
+- EC-FA-BC-30-4B-3D / 192.168.1.14 -   door_light
+- DC-4F-22-DF-FF-32 / 192.168.1.15 -   cellar_light-7986
+- DC-4F-22-DF-FD-71 / 192.168.1.16 -   sons_light
+
+- 5C-CF-7F-A3-C6-34 / 192.168.1.17 -   guest_room
+- DC-4F-22-DE-F1-F3 / 192.168.1.19 -   wicket
+                                   -   bedroom_light
+
+- EC-FA-BC-2F-DB-36 / 192.168.1.20 -   kitchen_sensors
+- 60-01-94-CC-B7-F3 / 192.168.1.21 -   RF_bridge
+                                   -   kitchen_light
+
+- 24:0A:C4:9B:F5:34 / 192.168.0.201-   Wled (Stair light)
+
+ASUS manual IP and 
+- B8:27:EB:08:4A:51 / 192.168.0.2  -   HASSIO
+- 78:02:F8:3A:29:F0 / 192.168.0.4  -   Redmi4-Redmi 
+- 50:EC:50:0C:C0:DF / 192.168.0.11 -   Robot Vacuum
+- 24:0A:C4:9B:F5:34 / 192.168.0.201-   Wled (Stair light)
+- BC:EE:7B:87:F0:97 / 192.168.0.100-   ProPC 
+
+ASUS static IP and 
+- 28:AD:3E:63:CB:0D / 192.168.0.204  -   cam courtyard
+-                   / 192.168.0.203  -   cam doorbell 
+-                   / 192.168.0.98   -   Tp-Link SayNet
+-                   / 192.168.0.99   -   Tp-Link Archer
+ 
+
+ASUS port forwarding
+ext port: 443  ip: 192.168.0.2 int port:   8123 - radchenko.duckdns.org
+ext port: 1880 ip: 192.168.0.2 int port:   1880 - radchenko.duckdns.org:1880 (Node-Red (Andrii/Grushevskogo8a))
+
+ext port: 554  ip: 192.168.0.204 int port: 554 - cam hd rtsp (rtsp://home:Grushevskogo8a@176.126.62.89:554/11) cam mac: 28:AD:3E:63:CB:0D
+ext port: 8082 ip: 192.168.0.204 int port: 8082 - cam onvif (open)
+
+ext port: 5541  ip: 192.168.0.203 int port: 554 - cam doorbell rtsp (rtsp://home:Grushevskogo8a@176.126.62.89:5541/11) cam mac: 
+ext port: 8083 ip: 192.168.0.203 int port: 8082 - cam onvif (open)
+
+ext port: 8123 ip: 192.168.0.2 int port: 8123 - hassio without ssl
+ext port: 22 ip: 192.168.0.2 int port: 22 - hassio ssh (pass: andrei) ssh root@176.126.62.89
+
+
+
+

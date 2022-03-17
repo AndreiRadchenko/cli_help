@@ -1,0 +1,3 @@
+To establish connection type in cli: 
+
+sudo openvpn --config /home/andrei/Sonoff-SmartHome/OpenVpn/client.ovpn

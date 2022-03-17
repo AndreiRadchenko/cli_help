@@ -1,0 +1,22 @@
+#find serial port where device connected
+
+ll /sys/class/tty/ttyUSB*
+
+#set USB0 access
+
+sudo chmod ugo+rw /dev/ttyUSB0
+
+http://192.168.0.201/? - boiler-tasmota static ip
+
+#backup device firmware
+
+esptool.py --port /dev/ttyUSB0 read_flash 0x00000 0x100000 image1M.bin
+
+#erase device
+
+esptool.py --port /dev/ttyUSB0 erase_flash
+
+#download tasmota to device
+
+esptool.py --port /dev/ttyUSB0 write_flash -fs 1MB -fm dout 0x0 sonoff-sensors.bin
+esptool.py --port /dev/ttyUSB0 write_flash -fs 1MB -fm dout 0x0 sonoff-lite-850.bin

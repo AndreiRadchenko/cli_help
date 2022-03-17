@@ -1,0 +1,44 @@
+#path to quirk folder in homeassistant container
+cd usr/local/lib/python3.8/site-packages/zhaquirks/wyze
+
+Access the quirks directory
+
+on HA > 0.113: /usr/local/lib/python3.8/site-packages/zhaquirks/
+on HA < 0.113: /usr/local/lib/python3.7/site-packages/zhaquirks/
+Copy updated/new quirk to zhaquirks directory: cp -a /config/temp/NEW_QUIRK ./
+
+Remove the pycache folder so it is regenerated rm -rf ./__pycache__/
+
+Close out the console and restart HA.
+
+Note: The added/update quirk will not survive a HA version update.
+
+        fakes = [117]                                                                 
+        if args[0] in fakes:                                                   
+            return  
+        if args[52] == 169 and args[41] == 30:                                        
+            self.warning("the lock is autounlocked via the app")               
+            self.endpoint.device.lock_bus.listener_event("lock_event", 2)             
+        if args[52] == 160 and args[41] == 30:                        
+            self.warning("the lock is unlocked via the app")                   
+            self.endpoint.device.lock_bus.listener_event("lock_event", 2)             
+        elif args[52] == 160 and args[41] == 25:                      
+            self.warning("the lock is locked via the app")               
+            self.endpoint.device.lock_bus.listener_event("lock_event", 1)
+        elif args[52] == 164 and args[41] == 30:                               
+            self.warning("the lock is unlocked manually")                             
+            self.endpoint.device.lock_bus.listener_event("lock_event", 2)
+        elif args[52] == 164 and args[41] == 25:                         
+            self.warning("the lock is locked manually")                        
+            self.endpoint.device.lock_bus.listener_event("lock_event", 1)             
+        elif args[52] == 194 and args[41] == 125:                                     
+            self.warning("the lock is locked via auto lock")                 
+            self.endpoint.device.lock_bus.listener_event("lock_event", 1)      
+        if args[52] == 174 and args[41] == 177:                                       
+            self.warning("the door is open")                                          
+            self.endpoint.device.motion_bus.listener_event("motion_event", ON)        
+        elif args[52] == 174 and args[41] == 178:                                     
+            self.warning("the door is closed")                                 
+            self.endpoint.device.motion_bus.listener_event("motion_event", OFF)
+
+

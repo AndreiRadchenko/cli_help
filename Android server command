@@ -1,0 +1,56 @@
+scrcpy - laptop terminal for android devices
+
+#install particular vertion of hass
+pip install homeassistant==0.88.2
+
+npm install pm2@2.10.4 -g
+
+Start at login
+pm2 start mosquitto -- -v -c /data/data/com.termux/files/usr/etc/mosquitto/mosquitto.conf
+pm2 start node-red --node-args="--max-old-space-size=128" -- -v
+pm2 start hass --interpreter=python -- --config /data/data/com.termux/files/home/.homeassistant
+pm2 save
+
+pm2 show hass
+pm2 logs hass
+
+If you make mistake in pm2 configuration…
+pm2 stop {hass or node-red...}
+pm2 delete {hass or node-red...}
+
+nano ~/.bashrc
+pm2 resurrect
+
+Home Assistant port 8123
+Node-Red port 1880
+Mosquitto port 1883
+
+ssh dir:
+/data/data/com.termux/files/usr/etc/ssh
+set ssh password on termux:
+$ passwd (andrei)
+New password:
+Retype new password:
+New password was successfully set.
+
+start sshd in termux, then run: "ssh 192.168.0.222 -p 8022" -> on linux
+#to close ssh session press:
+Ctrl D
+#ssh copy file "sudo" from local to remote:
+scp -P 8022 sudo andrei@192.168.0.222:/data/data/com.termux/files/usr/bin
+
+
+"LINK" A DIRECTORY FROM THE REMOTE COMPUTER TO AN (EMPTY) DIRECTORY OF THE LOCAL COMPUTER:
+Command run on linux PC:
+sshfs 176.126.62.77:/data/data/com.termux/files/home/.homeassistant /home/andrei/hass -p 8022
+sshfs 192.168.0.178:/data/data/com.termux/files/home /home/andrei/hass -p 8022
+Command for unmount:
+fusermount -u /home/andrei/hass
+
+/etc/fuse.conf
+I had to un-comment:
+user_allow_other
+
+Type the following command at the shell prompt to find out top 10 largest file/directories:
+# du -a | sort -n -r | head -n 10
+directory for mosquitto, hass, node-red log: /home/andrei/hass/.pm2/logs

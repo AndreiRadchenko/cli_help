@@ -1,0 +1,27 @@
+- INSTALL ADDON FROM REPOSITORY:  https://github.com/zigbee2mqtt/hassio-zigbee2mqtt
+
+- VERIFY THAT YOU PUT THE CORRECT PORT in addon configuration #
+Execute the following command in "web and ssh terminal" to find out the correct path:
+
+pi@raspberry:/ $ ls -l /dev/serial/by-id
+
+total 0
+lrwxrwxrwx. 1 root root 13 Oct 19 19:26 usb-Texas_Instruments_TI_CC2531_USB_CDC___0X00124B0018ED3DDF-if00 -> ../../ttyACM0
+
+- COFIGURE MQTT: 
+mqtt:
+  base_topic: zigbee2mqtt
+  server: mqtt://192.168.0.2
+  user: home
+  password: Grushevskogo8a
+serial:
+  port: /dev/ttyUSB2
+
+- CONFIG ZIGBEE CHANEL:
+to avoid interference with wifi on ch1 and ch6 select zigbee ch24 in addon config:
+https://www.metageek.com/training/resources/zigbee-wifi-coexistence.html
+
+advanced:
+  log_level: warn
+  pan_id: 6754
+  channel: 24

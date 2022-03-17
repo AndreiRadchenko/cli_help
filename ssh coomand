@@ -1,0 +1,16 @@
+#mount/unmount hassio on rpi
+sshfs root@176.126.62.89:/ ~/hassio-sshfs
+fusermount -u ~/hassio-sshfs
+ssh -p 8022 176.126.62.89
+ssh root@192.168.0.2
+
+#mount termux on redmi4 pro
+pass: andrei
+sshfs 192.168.0.4:/data/data/com.termux/files /home/andrei/hass -p 8022
+fusermount -u ~/hass
+ssh -p 8022 192.168.0.4
+
+#path to python prog in sshfs: hass/home/examples
+#run python prog in ssh
+python encode_face.py
+

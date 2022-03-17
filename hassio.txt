@@ -1,0 +1,9 @@
+//hassos-data/supervisor/homeassistant/ - path to configuration.yaml on sd card
+
+
+
+usr/share/hassio/homeassistant - path to the configuration.yaml in supervised installation when sshfs mounted
+
+sshfs andrii@192.168.0.2:/usr/share/hassio/homeassistant ~/hassio-sshfs
+#pass: anyhow06
+fusermount -u ~/hassio-sshfs -> unmount

@@ -1,0 +1,44 @@
+- windows firmware constructor:
+https://ptvo.info/zigbee-switch-configurable-firmware-v2-210/
+
+#Run Zigbee FirmwareConfig under linux wine:
+andrei@E330:~/Sonoff-SmartHome/CC2531-ZigBee/ptvo$ chmod a+x FirmwareConfig.exe
+andrei@E330:~/Sonoff-SmartHome/CC2531-ZigBee/ptvo$ wine FirmwareConfig.exe
+
+
+- flash a Zigbee chip using only an ESP8266 board:
+    - https://zigbee.blakadder.com/flashing_ccloader.html
+    - https://www.zigbee2mqtt.io/information/alternative_flashing_methods.html
+
+  1. Install the binutils package using your package manager (Debian based: sudo apt install binutils)
+   Unpack downloaded Z-Stack firmware .hex file and convert (replace <firmware> with filename):
+
+   objcopy --gap-fill 0xFF --pad-to 0x040000 -I ihex <firmare>.hex -O binary <firmware>.bin
+
+  2. Flash the ESP8266 (NodeMCU) with the precompiled CCLoader_Arduino.bin from Bin folder using your       favorite ESP8266 flashing tool (some examples: Tasmotizer!, NodeMCU-pyflasher, esptool.py, …)
+ESP8266 flashed this way will have to use GPIO5 (D1 NodeMCU), GPIO4 (D2 NodeMCU) and GPIO14 (D5 NodeMCU) for connecting to the Zigbee module.
+     git clone https://github.com/Jason2866/CCLoader.git
+     sudo chmod ugo+rw /dev/ttyUSB0
+     esptool.py --port /dev/ttyUSB0 write_flash -fs 1MB -fm dout 0x0 CCLoader_Arduino.bin
+
+  3. First you have to compile CCLoader:
+  cd to CCLoader/SourceCode/Linux
+  run
+  gcc main.c -o CCLoader
+
+  4. Copy <firmware>.bin to CCLoader/SourceCode/Linux and run
+  ./CCLoader /dev/ttyUSB0 <firmware>.bin 1
+
+  CCloader will start to count up rapidly, wait until command prompt reappears. Firmware flash was  successful if you see this:
+
+  Upload successfully!
+  File closed!
+  Comport closed!
+
+- PTVO GPIO config: https://ptvo.info/zigbee-configurable-firmware-features/gpio/
+Note: P30..P37 (and other non-existent pins) – these pins are virtual. They do not exist in the chip, but you may use them in your configuration. For example, when you need to link input and a virtual output. 
+
+To create binary_sensor (door sensor for example) use input switch lincked with virtual output pin, assigned to some of output chanel.
+
+- To pair with coordinator enter pairing mode and turn on device or press and hold for 10 sec P00 input 
+

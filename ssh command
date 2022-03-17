@@ -1,0 +1,30 @@
+Generate a rsa keypair: (no file name needed)
+# ssh-keygen
+
+then copy it on the server with one simple command:
+# ssh-copy-id hassio@192.168.0.2
+
+you can now log in without password:
+# ssh root@192.168.0.2
+
+
+You can use SSHFS instead of NFS.
+
+1. Install SSH Server addon 
+
+2. Configure it to make a successful ssh root@hassio.local
+3. mkdir ~/hassio-sshfs; cd ~/hassio-sshfs
+4. sshfs root@192.168.0.2:/config ~/hassio-sshfs
+
+sshfs root@176.126.62.89:/ ~/hassio-sshfs
+
+
+#password: andrei
+
+fusermount -u ~/hassio-sshfs -> unmount
+
+5. ls # it works!
+
+/home/username/.ssh - if authentification problem occur delete known-host file
+
+

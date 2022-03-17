@@ -1,0 +1,46 @@
+1) Debian/ubuntu: apt-get install -y python-setuptools
+2) sudo apt-get install -y python-pip
+3) python -m pip install esptool
+
+-Use the best and short USB cable that you have, usually, those that manufacturers send with smartphones are good enough
+-The upload speed should work fine with 115200
+-Try with the flash frequency as 40Mhz
+-And as you said: Keeping the FLASH button pressed before plugging it into the USB and releasing after the esptool.py script show "Connecting..."
+
+esptool.py    \
+        --chip esp32                                \
+        --port /dev/ttyUSB0                         \
+        --baud 921600                               \
+        --after hard_reset write_flash              \
+        -z                                          \
+        --flash_mode dio                            \
+        --flash_freq 40m                            \
+        --flash_size detect                         \
+        0x1000 bootloader.bin                       \
+        0x8000 partitions_espruino.bin              \
+        0x10000 espruino_esp32.bin                  \
+        0x100000 blank.bin
+        
+
+This example is to replace existing Espruino firmware after a new release:
+
+esptool.py    \
+        --chip esp32                                \
+        --port /dev/ttyUSB0                         \
+        --baud 921600                         \
+        --after hard_reset write_flash              \
+        -z                                          \
+        --flash_mode dio                            \
+        --flash_freq 40m                            \
+        --flash_size detect                         \
+        0x10000 espruino_esp32.bin
+
+Luanode usb:
+    idVendor  0x10c4
+    idProduct 0xea60
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0x10c4", ATTRS{idProduct}=="0xea60", GROUP="users", MODE="0666"
+
+check usb devices:
+udevadm info -a -p  $(udevadm info -q path -n /dev/ttyUSB0)
+

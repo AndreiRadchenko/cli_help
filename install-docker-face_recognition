@@ -1,0 +1,101 @@
+#install docker:
+    sudo apt install docker docker-compose
+
+#add user pi to docker admin group:
+    sudo usermod -aG docker pi
+
+#start docker demon:
+    systemctl start docker
+
+#To automatically start Docker and Containerd on boot for other distros, use the commands below:
+    sudo systemctl enable docker.service
+    sudo systemctl enable containerd.service
+#To disable this behavior, use disable instead.
+    sudo systemctl disable docker.service
+    sudo systemctl disable containerd.service
+
+#download portainer:
+    sudo docker pull portainer/portainer-ce:linux-arm
+
+#start portainer container:
+    sudo docker run --restart always -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:linux-arm
+
+#start web_recognition conteiner with volume /examples for "dataset_faces.dat"
+    docker run --restart always -d --name=web_face --mount source=data,destination=/root/face_recognition/examples/data -p 5001:5001 web_recognition:210515
+
+docker run -it --name=web_face --mount source=data,destination=/root/face_recognition/examples/data -p 5001:5001 andriiradchenko/web_recognition:210515
+
+#docker commands:
+
+    #list of images
+        docker images
+
+    #run container from tomcat iamge daemon mod, port forwarding from container port 8080 to server port 1234
+        docker run -d -p 1234:8080 tomcat
+
+    #list of running container
+        docker ps    
+
+    #cill container
+        docker rm [cont id]
+
+    #remuve image
+        docker rmi tomcat
+
+    #build image named 'web_recognition' with tag '210514' from local Dockerfile. Notice DOT '.' at the end of string
+        docker build -t web_recognition_v01:amd64 . --load
+
+    #For build on amd64 machine images for arm architecture use buildx
+         docker buildx create --platform linux/arm64,linux/arm/v7
+         docker buildx use [OPTIONS] NAME
+
+            What actually solved my problem after two painful days was creating the following custom builder:
+
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+            docker buildx create --name multiarch --driver docker-container --use
+            docker buildx inspect --bootstrap
+            Now I can successfully run:
+
+            docker buildx build --platform linux/arm64 -t user/repo --no-cache --pull .
+            on my linux/amd64 machine.
+
+    #build image named 'web_recognition' with tag 'armv7' for arm-v7 platform (RPI3B+ 32 bit OS)
+        docker buildx build --platform linux/arm/v7 -t web_recognition:armv7 . --load
+    #build image named 'web_recognition' with tag 'arm64' for arm-v7 platform (RPI3B+ 64 bit OS)
+        docker buildx build --platform linux/arm64 -t web_recognition:arm64 .
+
+    #Запустить интерактивно /bin/bash на контейнере с ID 5267e21d140
+        docker exec -it 5267e21d140 /bin/bash
+
+    #Выйти из контейнера
+        exit
+
+    #Создать Image с именем newimage_v2:latest из контейнера с ID 5267e21d140
+        docker commit 5267e21d140  newimage_v2:latest
+
+    #команда зупиняє і видаляє всі контейнери
+        docker rm -f $(docker ps -aq)
+
+#docker volune commands:
+    docker volume ls
+    docker volume inspect data
+
+#push image to docker.hub
+    docker image tag web_recognition:210515 andriiradchenko/web_recognition:210515
+    docker login -u andriiradchenko -p MishaDimaVika docker.io
+    docker image push andriiradchenko/web_recognition:210515
+
+#reinstall web_face container
+
+docker pull andriiradchenko/web_recognition:armv702
+
+docker run --restart always -d --name=web_face --mount source=data,destination=/root/face_recognition/examples/data -p 5001:5001 web_recognition:armv702
+
+docker run --restart always -d --name=web_face --mount source=data,destination=/root/face_recognition/examples/data -p 5001:5001 andriiradchenko/web_recognition
+
+docker run --restart always -d --name=web_face -v face_data:/root/face_recognition/examples -p 5001:5001 andriiradchenko/web_recognition
+                                                     /\
+                                                     ||
+                                    persist data between container creation
+
+"map": ["examples:rw", "examples/data:rw"],
